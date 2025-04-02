@@ -1,4 +1,4 @@
-import { Col, Container, Row, Carousel } from "react-bootstrap";
+import { Col, Container, Row, Carousel, Card } from "react-bootstrap";
 import books from "../Horror/horror_updated.json";
 import { Component } from "react";
 
@@ -8,8 +8,8 @@ class Cards extends Component {
   };
 
   render() {
-    const chunkedBooks = []; 
-    
+    const chunkedBooks = [];
+
     for (let i = 0; i < books.length; i += 4) {
       chunkedBooks.push(books.slice(i, i + 4));
     }
@@ -18,7 +18,8 @@ class Cards extends Component {
       <Container className={this.props.className}>
         <Row className="justify-content-center ">
           <Col xs={12} md={9} lg={9} className="text-center w-100 bg-black">
-            <Carousel prevIcon={
+            <Carousel
+              prevIcon={
                 <span
                   className="carousel-control-prev-icon "
                   aria-hidden="true"
@@ -30,7 +31,7 @@ class Cards extends Component {
 
                     boxShadow: "0 0 15px black",
                     border: "2px solid black",
-              opacity: 1 
+                    opacity: 1,
                   }}
                 />
               }
@@ -43,14 +44,13 @@ class Cards extends Component {
                     borderRadius: "50%",
                     width: "40px",
                     height: "40px",
-              boxShadow: "0 0 15px black",
-              border: "2px solid black",
-        opacity: 1 
-                  }}  
-                  />
-                }
+                    boxShadow: "0 0 15px black",
+                    border: "2px solid black",
+                    opacity: 1,
+                  }}
+                />
+              }
               onSlide={(i) => {
-
                 console.log("funziona??", i);
                 this.setState({
                   activeBook: books[i],
@@ -63,7 +63,7 @@ class Cards extends Component {
                     <Row className="d-flex justify-content-center">
                       {bookGroup.map((book) => {
                         return (
-                          <Col key={book.asin} xs={12}  md={3} lg={3}>
+                          <Col key={book.asin} xs={12} md={3} lg={3}>
                             <div className="card h-100 bg-info opacity-75">
                               <img
                                 src={book.img}
@@ -76,10 +76,14 @@ class Cards extends Component {
                                 }}
                               />
                               <div className="card-body d-flex flex-column justify-content-between">
-                              <h5 className="d-flex flex-column  flex-grow-1">{book.title}</h5>
-                              <p className="mb-0">€ {book.price}</p>
-                             <button className="bg-black opacity-75 "><a href={book.shoplink}>ACQUISTA ORA</a></button>
-                            </div>
+                                <h5 className="d-flex flex-column  flex-grow-1">
+                                  {book.title}
+                                </h5>
+                                <p className="mb-0">€ {book.price}</p>
+                                <button className="bg-black opacity-75 ">
+                                  <a href={book.shoplink}>ACQUISTA ORA</a>
+                                </button>
+                              </div>
                             </div>
                           </Col>
                         );
