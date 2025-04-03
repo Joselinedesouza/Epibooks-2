@@ -1,5 +1,6 @@
 import { Component } from "react";
-import CommentArea from "../components/CommentArea";
+import CommentArea from "./CommentArea";
+/*import CommentArea from "../components/CommentArea";
 //QUI ABBIAMO IL SINGLE BOOK CON FUNCTION
 /*const SingleBook = function (props) {
 
@@ -40,7 +41,7 @@ class SingleBook extends Component {
     return (
       <div
         className={`card h-100 bg-info opacity-75 ${
-          this.state.selected ? "border border-danger" : ""
+          this.state.selected ? "border border-danger " : ""
         }`}
         onClick={this.toggleSelection}
       >

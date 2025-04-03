@@ -1,16 +1,13 @@
 import React from "react";
+import { ListGroup } from "react-bootstrap";
 
-const SingleComment = ({ comment }) => {
+const SingleComment = function (props) {
   return (
-    <div className="single-comment mb-2 p-2 border rounded">
-      <p className="mb-1">
-        <strong>{comment.user || "Anonimo"}</strong>
-      </p>
-      <p className="mb-1">{comment.text}</p>
-      <p className="mb-0">
-        <em>Voto: {comment.rating}/5</em>
-      </p>
-    </div>
+    <ListGroup.Item className="d-flex justify-content-between">
+      <div className="d-flex flex-wrap align-content-center">
+        {props.comments.comments} | {props.comments.rate}/5
+      </div>
+    </ListGroup.Item>
   );
 };
 

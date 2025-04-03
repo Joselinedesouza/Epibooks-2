@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container, Row, Carousel } from "react-bootstrap";
 import SingleBook from "./SingleBook";
 
-const BookList = ({ BooksArray, className }) => {
+const BookList = ({ BooksArray, selectedBook, setSelectedBook, className }) => {
   const chunkArray = (array, chunkSize) => {
     return array.reduce((result, item, index) => {
       const chunkIndex = Math.floor(index / chunkSize);
@@ -57,7 +57,11 @@ const BookList = ({ BooksArray, className }) => {
                 <Row className="d-flex justify-content-center">
                   {bookGroup.map((book) => (
                     <Col key={book.asin} xs={12} md={3} lg={3}>
-                      <SingleBook book={book} />
+                      <SingleBook
+                        book={book}
+                        isSelected={selectedBook === book.asin}
+                        setSelectedBook={setSelectedBook}
+                      />
                     </Col>
                   ))}
                 </Row>

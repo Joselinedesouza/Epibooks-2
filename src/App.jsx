@@ -8,7 +8,6 @@ import HorrorBooks from "./Horror/horror_updated.json";
 import BookList from "./components/BooksList";
 import CadoBook from "./components/CadoBook";
 import Bestseller from "./components/Bestseller.jsx";
-import CommentArea from "./components/CommentArea.jsx";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <BookList BooksArray={HorrorBooks} />
           <CadoBook libro={HorrorBooks[0]} />
           <Bestseller libri={HorrorBooks.slice(1, 4)} />
-          <CommentArea />
         </main>
       </div>
       <MyFooter />

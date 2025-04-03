@@ -1,68 +1,84 @@
 import React, { Component } from "react";
+import { Button, Form } from "react-bootstrap";
+
+const URL = `https://striveschool-api.herokuapp.com/api/comments`;
+const TOKEN =
+  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N2RkOGE1NjM4MzRiZjAwMTUwMDA5ZWIiLCJpYXQiOjE3NDM2ODA5NTUsImV4cCI6MTc0NDg5MDU1NX0.eUEdO6Xo7sMCUSlmWNQm_vy_Xz7ezGpz1chLlenM-iI";
 
 class AddComment extends Component {
   state = {
-    comment: "",
-    rating: 1, // Imposta il valore iniziale come 1
+    comments: { comment: "", rate: "", bookId: this.props.asin },
   };
 
-  handleCommentChange = (e) => {
-    this.setState({ comment: e.target.value });
-  };
-
-  handleRatingChange = (e) => {
-    // Assicurati che il valore sia un numero valido (tra 1 e 5)
-    const newRating = parseInt(e.target.value, 10);
-
-    // Verifica che newRating sia un numero e sia compreso tra 1 e 5
-    if (!isNaN(newRating) && newRating >= 1 && newRating <= 5) {
-      this.setState({ rating: newRating });
-    }
-  };
-
-  handleSubmit = (e) => {
+  sendComments = (e) => {
     e.preventDefault();
-    const { comment, rating } = this.state;
-    const newComment = {
-      comment,
-      rating,
-      bookId: this.props.bookId,
-    };
-
-    // Invia il nuovo commento tramite la funzione passata come prop
-    this.props.onCommentAdded(newComment);
-
-    // Resetta il form
-    this.setState({ comment: "", rating: 1 });
+    fetch(URL, {
+      method: "POST",
+      body: JSON.stringify(this.state.comments),
+      headers: { "Content-Type": "application/json", authorization: TOKEN },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Boom");
+        }
+      })
+      .then((data) => {
+        console.log("Commento inviato con successo", data);
+        // Puoi resettare il form o aggiornare il componente qui, se necessario.
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.sendComments}>
         <div className="form-group">
-          <label htmlFor="comment">Commento:</label>
+          <label htmlFor="comment">Add your comment</label>
           <textarea
             id="comment"
             className="form-control"
-            value={this.state.comment}
-            onChange={this.handleCommentChange}
+            value={this.state.comments.comment}
+            required
+            onChange={(e) => {
+              this.setState({
+                comments: {
+                  ...this.state.comments,
+                  comment: e.target.value,
+                },
+              });
+            }}
           ></textarea>
         </div>
         <div className="form-group">
           <label htmlFor="rating">Voto (1-5):</label>
-          <input
-            type="number"
-            id="rating"
-            className="form-control"
-            value={this.state.rating}
-            min="1"
-            max="5"
-            onChange={this.handleRatingChange}
-          />
+          <Form.Group className="mb-3">
+            <Form.Label>Voto</Form.Label>
+            <Form.Select
+              value={this.state.comments.rate}
+              onChange={(e) => {
+                this.setState({
+                  comments: {
+                    ...this.state.comments,
+                    rate: e.target.value,
+                  },
+                });
+              }}
+            >
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </Form.Select>
+          </Form.Group>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <Button type="submit" className="bg-black opacity-75 text-light mt-3">
           Aggiungi Commento
-        </button>
+        </Button>
       </form>
     );
   }
