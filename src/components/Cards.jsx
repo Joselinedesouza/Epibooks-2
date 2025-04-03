@@ -1,4 +1,4 @@
-import { Col, Container, Row, Carousel, Card } from "react-bootstrap";
+import { Col, Container, Row, Carousel } from "react-bootstrap";
 import books from "../Horror/horror_updated.json";
 import { Component } from "react";
 

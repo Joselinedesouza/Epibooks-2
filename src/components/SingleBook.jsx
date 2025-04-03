@@ -1,32 +1,77 @@
-import React from "react";
-import { Card, Button } from "react-bootstrap";
-
-const SingleBook = ({ book }) => {
-  if (!book) {
-    return <p></p>;
-  }
+import { Component } from "react";
+import CommentArea from "../components/CommentArea";
+//QUI ABBIAMO IL SINGLE BOOK CON FUNCTION
+/*const SingleBook = function (props) {
 
   return (
-    <Card className="h-100 bg-info opacity-75">
-      <Card.Img
-        variant="top"
-        src={book.img || "https://via.placeholder.com/150"} // Placeholder se manca l'immagine
-        alt={`Immagine di ${book.title || "Sconosciuto"}`}
-        style={{ height: "300px", objectFit: "cover" }}
-      />
-      <Card.Body className="d-flex flex-column justify-content-between">
-        <Card.Title>{book.title || "Titolo non disponibile"}</Card.Title>
-        <Card.Text>€ {book.price || "N/A"}</Card.Text>
-        {book.shoplink ? (
-          <Button variant="dark" href={book.shoplink} target="_blank">
-            Acquista Ora
-          </Button>
-        ) : (
-          <p>Link non disponibile</p>
-        )}
-      </Card.Body>
-    </Card>
+    <div className="card h-100 bg-info opacity-75">
+    <img
+      src={props.book.img}
+      alt={"immagine di " + props.book.title}
+      className="d-block mx-auto "
+      style={{
+        width: "100%",
+        height: "300px",
+        objectFit: "cover",
+      }}
+    />
+    <div className="card-body d-flex flex-column justify-content-between">
+    <h5 className="d-flex flex-column  flex-grow-1">{props.book.title}</h5>
+    <p className="mb-0">€ {props.book.price}</p>
+   <button className="bg-black opacity-75 "><a href={props.book.shoplink}>ACQUISTA ORA</a></button>
+  </div>
+  </div>
   );
 };
+
+export default SingleBook;
+/ */
+
+//QUA ANDIAMO A FARE IL SINGLEBOOK CON CLASS (GLI HO DATO GIA' L'IMPOSTAZIONE CON LE CARDS PERSONALIZZATE)
+
+class SingleBook extends Component {
+  state = {
+    selected: false,
+  };
+  toggleSelection = () => {
+    this.setState((prevState) => ({ selected: !prevState.selected }));
+  };
+  render() {
+    return (
+      <div
+        className={`card h-100 bg-info opacity-75 ${
+          this.state.selected ? "border border-danger" : ""
+        }`}
+        onClick={this.toggleSelection}
+      >
+        <img
+          src={this.props.book.img}
+          alt={"immagine di " + this.props.book.title}
+          className="d-block mx-auto"
+          style={{
+            width: "100%",
+            height: "300px",
+            objectFit: "cover",
+          }}
+        />
+        <div className="card-body d-flex flex-column justify-content-between">
+          <h5 className="d-flex flex-column flex-grow-1">
+            {this.props.book.title}
+          </h5>
+          <p className="mb-0">€ {this.props.book.price}</p>
+          <button className="bg-black opacity-75">
+            <a
+              href={this.props.book.shoplink}
+              className="text-white text-decoration-none"
+            >
+              ACQUISTA ORA
+            </a>
+          </button>
+        </div>
+        {this.state.selected && <CommentArea bookId={this.props.book.asin} />}
+      </div>
+    );
+  }
+}
 
 export default SingleBook;
